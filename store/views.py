@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
-
+from django.core import serializers
+import json
 # Create your views here.
 
 def store(request):
@@ -58,4 +59,13 @@ def getCartItems(request):
     else:
         orderitems = []
     total = sum([item.quantity for item in orderitems])
-    return JsonResponse({'totalItems': total}, safe = False)
+   
+    cartObj = {'totalItems': total}
+    items = {}
+    for item in orderitems:
+        items[item.product.id] = item.quantity
+
+    cartObj['items']=items
+    cartObj['total_cart']=order.get_cart_total
+
+    return JsonResponse(cartObj, safe = False)
