@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
 from django.core import serializers
-import json
+import json, datetime
 # Create your views here.
 
 def store(request):
@@ -69,3 +69,8 @@ def getCartItems(request):
     cartObj['total_cart']=order.get_cart_total
 
     return JsonResponse(cartObj, safe = False)
+
+
+def processOrder(request):
+    transaction_id = datetime.datetime.now().timestamp
+    return JsonResponse('Completed order')

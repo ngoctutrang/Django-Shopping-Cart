@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 
 # Create your models here.
 
@@ -81,6 +82,7 @@ class ShippingAddress(models.Model):
 	city = models.CharField(max_length=200, null=False)
 	state = models.CharField(max_length=200, null=False)
 	zipcode = models.CharField(max_length=200, null=False)
+	country = CountryField(blank_label='(select country)', null=True)
 	date_added = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
